@@ -1,0 +1,6 @@
+{
+  "name": "扇形面积与弧长计算器 (Sector & Arc Calculator)",
+  "description": "专业扇形面积计算公式与弧长在线计算器。包含中考常见180与360混淆防错速记、交互式动态扇形图形、已知两量反求任意未知量、圆锥侧面展开图转化及真题自测。",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
