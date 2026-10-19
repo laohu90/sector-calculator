@@ -4,9 +4,9 @@ import { MathFormula } from './MathFormula';
 
 export const SeoContent: React.FC = () => {
   return (
-    <article className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 sm:p-8 shadow-sm space-y-8 text-slate-800 dark:text-slate-200 leading-relaxed">
+    <article className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5 sm:p-6 shadow-xs space-y-6 text-slate-800 dark:text-slate-200 leading-relaxed">
       {/* Main Title */}
-      <header className="border-b border-slate-100 dark:border-slate-800 pb-5">
+      <header className="border-b border-slate-100 dark:border-slate-800 pb-4">
         <div className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 text-xs font-bold uppercase tracking-wider mb-2">
           <BookOpen className="w-4 h-4" />
           <span>初中数学几何专项复习与在线工具指南</span>

@@ -3,6 +3,37 @@
  * Handles exact representation with Pi, fraction simplification, and numerical approximations.
  */
 
+/** Parse input string that may contain pi, π, fractions */
+export function parseMathInput(input: string | number): number {
+  if (typeof input === 'number') return isNaN(input) ? 0 : input;
+  if (!input) return 0;
+  const cleaned = input.trim().toLowerCase().replace(/π/g, 'pi');
+  
+  try {
+    if (cleaned.includes('pi')) {
+      const parts = cleaned.split('pi');
+      const coeffStr = parts[0].replace('*', '').trim();
+      const coeff = coeffStr === '' || coeffStr === '+' ? 1 : coeffStr === '-' ? -1 : parseFloat(coeffStr) || 1;
+      let after = 1;
+      if (parts[1] && parts[1].startsWith('/')) {
+        const div = parseFloat(parts[1].slice(1)) || 1;
+        after = 1 / div;
+      }
+      return coeff * Math.PI * after;
+    }
+    if (cleaned.includes('/')) {
+      const [num, den] = cleaned.split('/');
+      const n = parseFloat(num);
+      const d = parseFloat(den);
+      if (!isNaN(n) && !isNaN(d) && d !== 0) return n / d;
+    }
+    const val = parseFloat(cleaned);
+    return isNaN(val) ? 0 : val;
+  } catch {
+    return 0;
+  }
+}
+
 export interface SectorCalculationResult {
   radius: number;
   angleDeg: number;
