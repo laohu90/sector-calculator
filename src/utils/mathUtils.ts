@@ -118,7 +118,7 @@ export function formatNumber(val: number, decimals = 4): string {
 }
 
 /** Calculate full sector properties from radius r and angle in degrees n */
-export function computeFromRadiusAndAngle(r: number, n: number): SectorCalculationResult {
+export function computeFromRadiusAndAngle(r: number, n: number, lang: 'en' | 'zh' = 'en'): SectorCalculationResult {
   // Normalize angle between 0 and 360 for standard sectors, but allow user up to 360
   const angleDeg = Math.max(0.01, Math.min(360, n));
   const radius = Math.max(0.001, r);
@@ -187,41 +187,63 @@ export function computeFromRadiusAndAngle(r: number, n: number): SectorCalculati
     coneVolume = (1 / 3) * Math.PI * coneBaseRadius * coneBaseRadius * coneHeight;
   }
 
+  const isEn = lang === 'en';
+
   const steps = [
     {
-      title: '1. 弧长 l 计算 (注意分母为 180)',
+      title: isEn
+        ? '1. Arc Length l (Denominator is 180)'
+        : '1. 弧长 l 计算 (注意分母为 180)',
       formula: 'l = \\frac{n}{180} \\pi r = \\frac{n}{360} \\times (2\\pi r)',
       substitution: `l = \\frac{${angleDeg}}{180} \\times \\pi \\times ${radius}`,
       result: `l = ${arcLengthPiExact} \\approx ${formatNumber(arcLength, 4)}`,
-      note: '因为整圆周长是 2πr，约分后分母是 180，千万别写成 360！',
+      note: isEn
+        ? 'Full circumference is 2πr, canceling with 360 leaves 180!'
+        : '因为整圆周长是 2πr，约分后分母是 180，千万别写成 360！',
     },
     {
-      title: '2. 扇形面积 S 计算 (注意分母为 360)',
+      title: isEn
+        ? '2. Sector Area S (Denominator is 360)'
+        : '2. 扇形面积 S 计算 (注意分母为 360)',
       formula: 'S = \\frac{n}{360} \\pi r^2',
       substitution: `S = \\frac{${angleDeg}}{360} \\times \\pi \\times ${radius}^2 = \\frac{${angleDeg}}{360} \\times \\pi \\times ${formatNumber(radius * radius, 2)}`,
       result: `S = ${areaPiExact} \\approx ${formatNumber(area, 4)}`,
-      note: '因为整圆面积是 πr²，没有系数2可以约分，分母始终是 360！',
+      note: isEn
+        ? 'Full area is πr² with no factor of 2, so 360 remains intact!'
+        : '因为整圆面积是 πr²，没有系数2可以约分，分母始终是 360！',
     },
     {
-      title: '3. 面积与弧长关系验算公式 (桥梁公式)',
+      title: isEn
+        ? '3. Bridge Formula (Triangle Analogy)'
+        : '3. 面积与弧长关系验算公式 (桥梁公式)',
       formula: 'S = \\frac{1}{2} l r',
       substitution: `S = \\frac{1}{2} \\times (${formatNumber(arcLength, 4)}) \\times ${radius}`,
       result: `S \\approx ${formatNumber(0.5 * arcLength * radius, 4)}`,
-      note: '像三角形面积公式一样好记：底是弧长l，高是半径r，S=½底×高！',
+      note: isEn
+        ? 'Base is arc l, height is radius r: S = ½ · base · height'
+        : '像三角形面积公式一样好记：底是弧长l，高是半径r，S=½底×高！',
     },
     {
-      title: '4. 扇形周长计算 (易漏加两条半径)',
+      title: isEn
+        ? '4. Sector Perimeter (Often misses +2r)'
+        : '4. 扇形周长计算 (易漏加两条半径)',
       formula: 'C = l + 2r',
       substitution: `C = (${formatNumber(arcLength, 4)}) + 2 \\times ${radius}`,
       result: `C \\approx ${formatNumber(perimeter, 4)}`,
-      note: '中考极易漏分点：扇形周长由1条弧和2条半径围成，必须加上 2r！',
+      note: isEn
+        ? 'Perimeter must include both radii: C = l + 2r'
+        : '中考极易漏分点：扇形周长由1条弧和2条半径围成，必须加上 2r！',
     },
     {
-      title: '5. 对应圆锥展开关系 (中考压轴常用)',
-      formula: 'r_{底} = \\frac{n}{360} R = \\frac{l}{2\\pi}',
-      substitution: `r_{底} = \\frac{${angleDeg}}{360} \\times ${radius}`,
-      result: `r_{底} = ${coneBaseRadiusPiExact} \\approx ${formatNumber(coneBaseRadius, 4)}`,
-      note: '扇形的半径就是圆锥的母线R，扇形的弧长就是底面圆周长！',
+      title: isEn
+        ? '5. Corresponding Cone Base Radius'
+        : '5. 对应圆锥展开关系 (中考压轴常用)',
+      formula: 'r_{base} = \\frac{n}{360} R = \\frac{l}{2\\pi}',
+      substitution: `r_{base} = \\frac{${angleDeg}}{360} \\times ${radius}`,
+      result: `r_{base} = ${coneBaseRadiusPiExact} \\approx ${formatNumber(coneBaseRadius, 4)}`,
+      note: isEn
+        ? 'Sector radius R is cone slant height; sector arc is cone base circumference!'
+        : '扇形的半径就是圆锥的母线R，扇形的弧长就是底面圆周长！',
     },
   ];
 
@@ -253,7 +275,8 @@ export type KnownPairType = 'r_n' | 'r_l' | 'r_s' | 'n_l' | 'n_s' | 'l_s';
 export function solveInverseSector(
   type: KnownPairType,
   val1: number,
-  val2: number
+  val2: number,
+  lang: 'en' | 'zh' = 'en'
 ): SectorCalculationResult | null {
   if (val1 <= 0 || val2 <= 0) return null;
 
@@ -318,5 +341,5 @@ export function solveInverseSector(
 
   if (r <= 0 || n <= 0 || isNaN(r) || isNaN(n)) return null;
 
-  return computeFromRadiusAndAngle(r, n);
+  return computeFromRadiusAndAngle(r, n, lang);
 }

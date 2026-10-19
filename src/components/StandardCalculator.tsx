@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { Copy, Check, ChevronDown, ChevronUp } from 'lucide-react';
 import { SectorCalculationResult, formatNumber } from '../utils/mathUtils';
 import { MathFormula } from './MathFormula';
+import { Language, translations } from '../i18n/translations';
 
 interface StandardCalculatorProps {
   radius: number;
   angleDeg: number;
+  lang?: Language;
   onRadiusChange: (val: number) => void;
   onAngleChange: (val: number) => void;
   result: SectorCalculationResult;
@@ -14,10 +16,12 @@ interface StandardCalculatorProps {
 export const StandardCalculator: React.FC<StandardCalculatorProps> = ({
   radius,
   angleDeg,
+  lang = 'en',
   onRadiusChange,
   onAngleChange,
   result,
 }) => {
+  const t = translations[lang];
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const [showSteps, setShowSteps] = useState(false);
 
@@ -35,7 +39,7 @@ export const StandardCalculator: React.FC<StandardCalculatorProps> = ({
           {/* Radius Input */}
           <div className="space-y-1.5">
             <div className="flex items-center justify-between text-xs font-semibold text-slate-700 dark:text-slate-300">
-              <span>半径 r</span>
+              <span>{t.radiusInput}</span>
               <div className="flex items-center gap-1">
                 <input
                   type="number"
@@ -62,7 +66,7 @@ export const StandardCalculator: React.FC<StandardCalculatorProps> = ({
           {/* Angle Input */}
           <div className="space-y-1.5">
             <div className="flex items-center justify-between text-xs font-semibold text-slate-700 dark:text-slate-300">
-              <span>圆心角 n°</span>
+              <span>{t.angleInput}</span>
               <div className="flex items-center gap-1">
                 <input
                   type="number"
@@ -71,7 +75,7 @@ export const StandardCalculator: React.FC<StandardCalculatorProps> = ({
                   step="1"
                   value={angleDeg}
                   onChange={(e) => onAngleChange(Math.max(1, Math.min(360, parseFloat(e.target.value) || 1)))}
-                  className="w-20 px-2 py-0.5 text-right font-mono font-bold text-sm bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded focus:ring-1 focus:ring-indigo-500 focus:outline-none"
+                  className="w-20 px-2 py-0.5 text-right font-mono font-bold text-sm bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded focus:ring-1 focus:ring-rose-500 focus:outline-none"
                 />
                 <span className="text-slate-400">°</span>
               </div>
@@ -89,16 +93,16 @@ export const StandardCalculator: React.FC<StandardCalculatorProps> = ({
         </div>
       </div>
 
-      {/* Primary Results: Clean 2-column layout */}
+      {/* Primary Results */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {/* Sector Area S */}
         <div className="bg-indigo-50/50 dark:bg-indigo-950/20 border border-indigo-200 dark:border-indigo-800/60 rounded-xl p-4 relative group">
           <div className="flex items-center justify-between text-xs text-indigo-700 dark:text-indigo-400 font-semibold mb-1">
-            <span>扇形面积 S</span>
+            <span>{t.sectorAreaTitle}</span>
             <button
               onClick={() => handleCopy(`${formatNumber(result.area, 4)} (${result.areaPiExact})`, 's')}
               className="text-indigo-400 hover:text-indigo-700"
-              title="复制"
+              title="Copy"
             >
               {copiedKey === 's' ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
             </button>
@@ -108,22 +112,22 @@ export const StandardCalculator: React.FC<StandardCalculatorProps> = ({
             <span className="text-xs font-normal text-slate-400 ml-1">cm²</span>
           </div>
           <div className="text-xs text-indigo-800 dark:text-indigo-300 mt-1 flex items-center gap-1">
-            <span>含π精确值: </span>
+            <span>{t.exactPi} </span>
             <MathFormula math={`S = ${result.areaPiExact}`} />
           </div>
           <div className="text-[11px] text-slate-400 mt-1">
-            公式: <MathFormula math="S = \frac{n}{360}\pi r^2 = \frac{1}{2}lr" />
+            <MathFormula math="S = \frac{n}{360}\pi r^2 = \frac{1}{2}lr" />
           </div>
         </div>
 
         {/* Arc Length l */}
         <div className="bg-rose-50/50 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-800/60 rounded-xl p-4 relative group">
           <div className="flex items-center justify-between text-xs text-rose-700 dark:text-rose-400 font-semibold mb-1">
-            <span>弧长 l (分母180)</span>
+            <span>{t.arcLengthTitle}</span>
             <button
               onClick={() => handleCopy(`${formatNumber(result.arcLength, 4)} (${result.arcLengthPiExact})`, 'l')}
               className="text-rose-400 hover:text-rose-700"
-              title="复制"
+              title="Copy"
             >
               {copiedKey === 'l' ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
             </button>
@@ -133,11 +137,11 @@ export const StandardCalculator: React.FC<StandardCalculatorProps> = ({
             <span className="text-xs font-normal text-slate-400 ml-1">cm</span>
           </div>
           <div className="text-xs text-rose-800 dark:text-rose-300 mt-1 flex items-center gap-1">
-            <span>含π精确值: </span>
+            <span>{t.exactPi} </span>
             <MathFormula math={`l = ${result.arcLengthPiExact}`} />
           </div>
           <div className="text-[11px] text-slate-400 mt-1">
-            公式: <MathFormula math="l = \frac{n}{180}\pi r" />
+            <MathFormula math="l = \frac{n}{180}\pi r" />
           </div>
         </div>
       </div>
@@ -145,30 +149,30 @@ export const StandardCalculator: React.FC<StandardCalculatorProps> = ({
       {/* Secondary Clean Summary Row */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
         <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-2.5">
-          <div className="text-slate-400 text-[11px]">扇形周长 (l+2r)</div>
+          <div className="text-slate-400 text-[11px]">{t.perimeterTitle}</div>
           <div className="font-bold font-mono text-slate-800 dark:text-slate-200 text-sm mt-0.5">
-            {formatNumber(result.perimeter, 3)}
+            {formatNumber(result.perimeter, 3)} cm
           </div>
         </div>
 
         <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-2.5">
-          <div className="text-slate-400 text-[11px]">弦长 AB</div>
+          <div className="text-slate-400 text-[11px]">{t.chordLabel} AB</div>
           <div className="font-bold font-mono text-slate-800 dark:text-slate-200 text-sm mt-0.5">
-            {formatNumber(result.chordLength, 3)}
+            {formatNumber(result.chordLength, 3)} cm
           </div>
         </div>
 
         <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-2.5">
-          <div className="text-slate-400 text-[11px]">弓形面积</div>
+          <div className="text-slate-400 text-[11px]">{t.segmentToggle}</div>
           <div className="font-bold font-mono text-slate-800 dark:text-slate-200 text-sm mt-0.5">
-            {formatNumber(result.segmentArea, 3)}
+            {formatNumber(result.segmentArea, 3)} cm²
           </div>
         </div>
 
         <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-2.5">
-          <div className="text-slate-400 text-[11px]">对应圆锥底半径</div>
+          <div className="text-slate-400 text-[11px]">{t.coneBaseTitle}</div>
           <div className="font-bold font-mono text-slate-800 dark:text-slate-200 text-sm mt-0.5">
-            {formatNumber(result.coneBaseRadius, 3)}
+            {formatNumber(result.coneBaseRadius, 3)} cm
           </div>
         </div>
       </div>
@@ -180,9 +184,9 @@ export const StandardCalculator: React.FC<StandardCalculatorProps> = ({
           onClick={() => setShowSteps(!showSteps)}
           className="w-full px-4 py-2.5 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white flex items-center justify-between transition"
         >
-          <span>推导过程与计算步骤</span>
+          <span>{t.stepsToggle}</span>
           <span className="flex items-center gap-1 text-[11px] text-slate-400">
-            {showSteps ? '收起' : '展开'}
+            {showSteps ? t.hideSteps : t.showSteps}
             {showSteps ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
           </span>
         </button>
@@ -193,11 +197,16 @@ export const StandardCalculator: React.FC<StandardCalculatorProps> = ({
               <div key={i} className="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800/50 space-y-1">
                 <div className="font-semibold text-slate-800 dark:text-slate-200">{st.title}</div>
                 <div className="text-slate-600 dark:text-slate-400 font-mono">
-                  代入: <MathFormula math={st.substitution} />
+                  {t.substLabel} <MathFormula math={st.substitution} />
                 </div>
                 <div className="text-indigo-600 dark:text-indigo-400 font-bold font-mono">
-                  结果: <MathFormula math={st.result} />
+                  {t.resultLabel} <MathFormula math={st.result} />
                 </div>
+                {st.note && (
+                  <div className="text-[11px] text-amber-600 dark:text-amber-400">
+                    💡 {st.note}
+                  </div>
+                )}
               </div>
             ))}
           </div>

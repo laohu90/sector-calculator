@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
+import { Language, translations } from '../i18n/translations';
 
 interface SectorCanvasProps {
   radius: number;
@@ -6,6 +7,7 @@ interface SectorCanvasProps {
   arcLength: number;
   area: number;
   chordLength: number;
+  lang?: Language;
   onAngleChange?: (angle: number) => void;
   onRadiusChange?: (radius: number) => void;
 }
@@ -16,8 +18,10 @@ export const SectorCanvas: React.FC<SectorCanvasProps> = ({
   arcLength,
   area,
   chordLength,
+  lang = 'en',
   onAngleChange,
 }) => {
+  const t = translations[lang];
   const svgRef = useRef<SVGSVGElement | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [showChord, setShowChord] = useState(false);
@@ -123,10 +127,10 @@ export const SectorCanvas: React.FC<SectorCanvasProps> = ({
 
   return (
     <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-xs select-none">
-      {/* Top Bar: Clean Minimalist info and toggles */}
+      {/* Top Bar */}
       <div className="flex items-center justify-between text-xs pb-2 border-b border-slate-100 dark:border-slate-800 text-slate-500 dark:text-slate-400">
         <span className="font-medium text-slate-700 dark:text-slate-300">
-          图形预览 (可拖动红色端点调角度)
+          {t.canvasTitle}
         </span>
         <div className="flex items-center gap-3">
           <label className="flex items-center gap-1 cursor-pointer hover:text-slate-800 dark:hover:text-slate-200">
@@ -136,7 +140,7 @@ export const SectorCanvas: React.FC<SectorCanvasProps> = ({
               onChange={(e) => setShowChord(e.target.checked)}
               className="rounded text-indigo-600 focus:ring-0 w-3.5 h-3.5"
             />
-            <span>弦长</span>
+            <span>{t.chordToggle}</span>
           </label>
           <label className="flex items-center gap-1 cursor-pointer hover:text-slate-800 dark:hover:text-slate-200">
             <input
@@ -145,7 +149,7 @@ export const SectorCanvas: React.FC<SectorCanvasProps> = ({
               onChange={(e) => setShowSegment(e.target.checked)}
               className="rounded text-indigo-600 focus:ring-0 w-3.5 h-3.5"
             />
-            <span>弓形</span>
+            <span>{t.segmentToggle}</span>
           </label>
         </div>
       </div>
@@ -259,7 +263,7 @@ export const SectorCanvas: React.FC<SectorCanvasProps> = ({
             textAnchor="middle"
             className="text-xs font-bold fill-rose-600 dark:fill-rose-400"
           >
-            l ≈ {arcLength.toFixed(2)}
+            {t.arcLabel} ≈ {arcLength.toFixed(2)}
           </text>
 
           <text
@@ -278,7 +282,7 @@ export const SectorCanvas: React.FC<SectorCanvasProps> = ({
               textAnchor="middle"
               className="text-[10px] font-semibold fill-amber-700 dark:fill-amber-400"
             >
-              弦长 ≈ {chordLength.toFixed(2)}
+              {t.chordLabel} ≈ {chordLength.toFixed(2)}
             </text>
           )}
         </svg>
