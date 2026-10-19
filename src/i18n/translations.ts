@@ -14,8 +14,21 @@ export interface Translations {
   tabInverse: string;
   tabConfusion: string;
   tabCone: string;
+  tabRealWorld: string;
+  tabTutorial: string;
   tabExam: string;
   tabGuide: string;
+
+  // Hero
+  heroBadge: string;
+  heroTitle: string;
+  heroDesc: string;
+  heroStat1: string;
+  heroStat1Sub: string;
+  heroStat2: string;
+  heroStat2Sub: string;
+  heroStat3: string;
+  heroStat3Sub: string;
 
   // Canvas
   canvasTitle: string;
@@ -102,6 +115,28 @@ export interface Translations {
   correctLabel: string;
   wrongLabel: string;
 
+  // Real-world Applications
+  realWorldTitle: string;
+  realWorldSub: string;
+  appPizzaTitle: string;
+  appPizzaDesc: string;
+  appSprinklerTitle: string;
+  appSprinklerDesc: string;
+  appWiperTitle: string;
+  appWiperDesc: string;
+  appRoadTitle: string;
+  appRoadDesc: string;
+
+  // Tutorials
+  tutorialTitle: string;
+  tutorialSub: string;
+  tutStep1H: string;
+  tutStep1P: string;
+  tutStep2H: string;
+  tutStep2P: string;
+  tutStep3H: string;
+  tutStep3P: string;
+
   // Cone Unfolding
   coneTitle: string;
   coneSub: string;
@@ -149,12 +184,25 @@ export const translations: Record<Language, Translations> = {
     langSwitch: '中文',
 
     // Tabs
-    tabStandard: 'Sector Calculator',
+    tabStandard: 'Calculator',
     tabInverse: 'Inverse Solver',
     tabConfusion: 'Why 180 vs 360?',
+    tabTutorial: 'How-to Tutorials',
+    tabRealWorld: 'Real-World Uses',
     tabCone: 'Cone Unfolding',
     tabExam: 'Practice Quiz',
     tabGuide: 'Formulas & Guide',
+
+    // Hero
+    heroBadge: 'All-in-One Educational Geometry Suite',
+    heroTitle: 'Sector Area & Arc Length Interactive Calculator',
+    heroDesc: 'Accurately solve sector area, arc length, perimeter, and central angle in degrees or radians. Features interactive geometric visualization, step-by-step mathematical proofs, and inverse problem solving.',
+    heroStat1: 'Exact in π & Decimals',
+    heroStat1Sub: 'Full Fraction Simplification',
+    heroStat2: 'Interactive Geometry',
+    heroStat2Sub: 'Live Angle Dragging',
+    heroStat3: '180 vs 360 Explained',
+    heroStat3Sub: 'No More Exam Confusion',
 
     // Canvas
     canvasTitle: 'Interactive Geometry (Drag red point to change angle)',
@@ -240,6 +288,28 @@ export const translations: Record<Language, Translations> = {
     correctLabel: 'Correct!',
     wrongLabel: 'Wrong!',
 
+    // Real-world
+    realWorldTitle: 'Real-World Applications of Sectors and Arcs',
+    realWorldSub: 'Discover how sectors and arcs power daily life, engineering, and architecture.',
+    appPizzaTitle: 'Pizza & Cake Slicing',
+    appPizzaDesc: 'Divide a circular pizza into equal slices. Calculate the crust length (arc) and slice area for nutrition or portion control.',
+    appSprinklerTitle: 'Lawn Sprinkler Coverage',
+    appSprinklerDesc: 'Rotary sprinkler heads rotate at specific angles (90°, 180°, 270°). Calculate exact watered grass square footage and water distribution.',
+    appWiperTitle: 'Car Windshield Wiper Sweeps',
+    appWiperDesc: 'Automotive wiper blades travel across an annular sector. Determine the visible wiped glass area for driving safety regulations.',
+    appRoadTitle: 'Highway & Railway Curves',
+    appRoadDesc: 'Civil engineers design roadway transition curves as circular arcs to calculate travel distance and maximum safe speed.',
+
+    // Tutorials
+    tutorialTitle: 'How to Calculate Sector Area & Arc Length: 3-Step Guide',
+    tutorialSub: 'Clear, step-by-step tutorial with practical formulas and worked examples.',
+    tutStep1H: 'Step 1: Compute Full Circle Property',
+    tutStep1P: 'Start by calculating the entire circle’s area (A = πr²) or circumference (C = 2πr).',
+    tutStep2H: 'Step 2: Find the Central Angle Fraction',
+    tutStep2P: 'Divide the central angle n° by 360° (or in radians, divide angle θ by 2π) to find the proportional slice.',
+    tutStep3H: 'Step 3: Multiply Fraction by Total',
+    tutStep3P: 'Multiply the fraction by total circle area: S = (n/360) · πr², or by circumference: l = (n/180) · πr.',
+
     // Cone Unfolding
     coneTitle: 'Cone Lateral Surface Unfolding',
     coneSub: 'Cone slant height R becomes sector radius; base circle circumference equals sector arc.',
@@ -288,9 +358,22 @@ export const translations: Record<Language, Translations> = {
     tabStandard: '扇形计算器',
     tabInverse: '反求未知量',
     tabConfusion: '180与360速记',
+    tabTutorial: '图文教程与步骤',
+    tabRealWorld: '生活应用场景',
     tabCone: '圆锥展开',
     tabExam: '真题自测',
     tabGuide: '公式大全',
+
+    // Hero
+    heroBadge: '中考几何与数学在线学习利器',
+    heroTitle: '扇形面积与弧长在线计算器与教程',
+    heroDesc: '精准计算扇形面积、弧长、周长、圆心角及弦长。支持动态几何画板端点拖拽、含π精确表达、全自由度双向逆推与初中几何经典防混淆剖析。',
+    heroStat1: '含π精确与小数',
+    heroStat1Sub: '分数智能最简化',
+    heroStat2: '交互几何画板',
+    heroStat2Sub: '端点拖拽实时响应',
+    heroStat3: '180与360避坑口诀',
+    heroStat3Sub: '告别考场粗心丢分',
 
     // Canvas
     canvasTitle: '交互式几何图形 (拖拽红色端点调节角度)',
@@ -375,6 +458,28 @@ export const translations: Record<Language, Translations> = {
     quizQ2: '扇形面积分母是：',
     correctLabel: '回答正确！',
     wrongLabel: '记混了！',
+
+    // Real-world
+    realWorldTitle: '扇形与弧长的实际生活与工程应用',
+    realWorldSub: '看看日常现实、工业设计与现代工程中如何广泛运用扇形与弧长计算。',
+    appPizzaTitle: '披萨切片与蛋糕均分',
+    appPizzaDesc: '将整张圆形披萨按等角切成数份（如8等份对应45°）。精准计算外围酥脆饼皮长度（弧长）与每一块的受食面积。',
+    appSprinklerTitle: '自动喷灌与园林喷头覆盖',
+    appSprinklerDesc: '园林草坪摇臂喷头多以扇形角度摆动（90°直角、180°半圆等）。通过射程计算浇灌总面积与草坪周长。',
+    appWiperTitle: '汽车雨刮器刮刷面积',
+    appWiperDesc: '汽车双摆式或单臂雨刮器旋转擦拭出的视窗为圆环扇形，直接关系到国家行车视野安全合规评估。',
+    appRoadTitle: '公路与铁轨转弯曲线',
+    appRoadDesc: '道路工程师设计平曲线路段时，利用圆心角与曲率半径精确测定弯道弧长，以标定车辆行驶距离与安全限速。',
+
+    // Tutorials
+    tutorialTitle: '如何计算扇形面积与弧长：三步速成教学指南',
+    tutorialSub: '清晰易懂的图文公式推导与步骤分解，助你彻底掌握圆几何。',
+    tutStep1H: '第 1 步：求出整圆的基准周长或面积',
+    tutStep1P: '首先计算该圆的完整周长 C = 2πr 或完整圆面积 A = πr²。',
+    tutStep2H: '第 2 步：计算扇形在整圆中所占的比例',
+    tutStep2P: '用圆心角 n° 除以 360°（弧度制则除以 2π），得到扇形占整个圆的比例因子 (n/360)。',
+    tutStep3H: '第 3 步：比例因子乘总数得出结果',
+    tutStep3P: '求弧长：(n/360) × 2πr 约简为 (n/180)πr；求面积：(n/360) × πr²。两步即可完成。',
 
     // Cone Unfolding
     coneTitle: '圆锥与侧面展开扇形转化专项',

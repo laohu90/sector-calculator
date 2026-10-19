@@ -15,19 +15,59 @@
     <meta name="twitter:description" content="一键计算扇形面积、弧长、周长、弦长与弓形面积，内附180与360核心防混淆口诀及中考易错题库。" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous" />
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "扇形面积与弧长计算器",
-      "applicationCategory": "EducationalApplication",
-      "operatingSystem": "All",
-      "description": "初中数学圆与扇形在线计算与学习工具，涵盖扇形面积公式S=(n/360)πr²与弧长公式l=(n/180)πr，提供动态图形、已知量双向逆推与易混考点解析。",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "CNY"
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Sector Area & Arc Length Calculator (扇形面积与弧长计算器)",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "All",
+        "description": "Interactive online calculator and comprehensive tutorial to compute sector area, arc length, central angle, and perimeter with step-by-step mathematical derivations in degrees and radians.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is the formula for the area of a sector?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "In degrees, the area of a sector is S = (n / 360) * π * r², or S = 1/2 * l * r where l is arc length. In radians, S = 1/2 * θ * r²."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the formula for the arc length of a circle?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "In degrees, arc length is l = (n / 180) * π * r because the factor of 2 in 2πr cancels with 360. In radians, l = θ * r."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why is arc length divided by 180 while sector area is divided by 360?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Circle circumference has 2 (2πr), canceling 360 to 180. Circle area is πr² with no factor 2, keeping 360 intact."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How to calculate the perimeter of a sector?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The perimeter of a sector is C = l + 2r, which includes the curved arc length l plus the two straight radii 2r."
+            }
+          }
+        ]
       }
-    }
+    ]
     </script>
   </head>
   <body>
