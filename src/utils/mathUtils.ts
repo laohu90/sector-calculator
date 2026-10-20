@@ -13,7 +13,21 @@ export function parseMathInput(input: string | number): number {
     if (cleaned.includes('pi')) {
       const parts = cleaned.split('pi');
       const coeffStr = parts[0].replace('*', '').trim();
-      const coeff = coeffStr === '' || coeffStr === '+' ? 1 : coeffStr === '-' ? -1 : parseFloat(coeffStr) || 1;
+      let coeff = 1;
+      if (coeffStr === '' || coeffStr === '+') {
+        coeff = 1;
+      } else if (coeffStr === '-') {
+        coeff = -1;
+      } else if (coeffStr.includes('/')) {
+        const [cn, cd] = coeffStr.split('/');
+        const n = parseFloat(cn);
+        const d = parseFloat(cd);
+        coeff = !isNaN(n) && !isNaN(d) && d !== 0 ? n / d : 1;
+      } else {
+        const p = parseFloat(coeffStr);
+        coeff = isNaN(p) ? 1 : p;
+      }
+
       let after = 1;
       if (parts[1] && parts[1].startsWith('/')) {
         const div = parseFloat(parts[1].slice(1)) || 1;
