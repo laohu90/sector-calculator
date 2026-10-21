@@ -26,7 +26,7 @@ import { SeoContent } from './components/SeoContent';
 import { InteractiveTutorial } from './components/InteractiveTutorial';
 import { RealWorldApplications } from './components/RealWorldApplications';
 import { MathFormula } from './components/MathFormula';
-import { Language, translations } from './i18n/translations';
+import { Language, SupportedLang, translations, resolveInitialLanguage } from './i18n/translations';
 
 export type ActiveTab =
   | 'standard'
@@ -39,10 +39,25 @@ export type ActiveTab =
   | 'guide';
 
 export default function App() {
-  const [lang, setLang] = useState<Language>(() => {
-    const saved = localStorage.getItem('sector_calc_lang');
-    return (saved === 'zh' ? 'zh' : 'en') as Language;
+  const [langState, setLangState] = useState<{ currentLang: SupportedLang; isAuto: boolean }>(() => {
+    const init = resolveInitialLanguage();
+    return { currentLang: init.lang, isAuto: init.isAuto };
   });
+  const lang = langState.currentLang;
+  const isAuto = langState.isAuto;
+  const setLang = (newLangOrFn: Language | ((prev: Language) => Language)) => {
+    setLangState((prev) => {
+      const next = typeof newLangOrFn === 'function' ? newLangOrFn(prev.currentLang) : newLangOrFn;
+      try {
+        localStorage.setItem('sector_calc_user_chosen_lang_v3', next);
+        localStorage.removeItem('sector_calc_lang');
+      } catch {}
+      const url = new URL(window.location.href);
+      url.searchParams.set('lang', next);
+      window.history.pushState({}, '', url.toString());
+      return { currentLang: next, isAuto: false };
+    });
+  };
   const [radius, setRadius] = useState<number>(6);
   const [angleDeg, setAngleDeg] = useState<number>(120);
   const [activeTab, setActiveTab] = useState<ActiveTab>('standard');
