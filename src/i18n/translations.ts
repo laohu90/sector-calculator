@@ -1,4 +1,4 @@
-export type Language = 'en' | 'zh';
+export type Language = 'en' | 'es' | 'fr' | 'pt' | 'zh';
 
 export interface Translations {
   appTitle: string;
@@ -173,7 +173,8 @@ export interface Translations {
   tableNotice: string;
 }
 
-export const translations: Record<Language, Translations> = {
+const enData = {
+
   en: {
     appTitle: 'Sector & Arc Length Calculator',
     tagline: 'S = (n/360)πr² | l = (n/180)πr | Never Confuse 180 and 360',
